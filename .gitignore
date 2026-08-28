@@ -1,0 +1,27 @@
+# Secrets and local configuration
+Azure Username and Password.txt
+Assignment - AI Application Development and Cloud Deployment.pdf
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+
+# Build and deployment artifacts
+*.zip
+dist/
+build/
+tmp/
+
+# Editors and operating systems
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

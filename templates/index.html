@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="AI-powered sentiment and priority analysis for student feedback.">
+  <title>CampusPulse AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="CampusPulse AI home">
+      <span class="brand-mark" aria-hidden="true">CP</span>
+      <span>CampusPulse <b>AI</b></span>
+    </a>
+    <div class="status"><span></span> Model online · {{ environment }}</div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="eyebrow">Student experience intelligence</div>
+      <h1>Turn feedback into<br><em>actionable signals.</em></h1>
+      <p>CampusPulse uses natural language processing to identify sentiment, urgency, and the next best action — instantly.</p>
+      <div class="model-facts" aria-label="Model facts">
+        <div><strong>{{ metrics.samples }}</strong><span>training samples</span></div>
+        <div><strong>{{ (metrics.accuracy * 100)|round|int }}%</strong><span>holdout accuracy</span></div>
+        <div><strong>&lt; 1s</strong><span>local inference</span></div>
+      </div>
+    </section>
+
+    <section class="workspace" aria-labelledby="analyzer-title">
+      <div class="panel input-panel">
+        <div class="panel-heading">
+          <div>
+            <span class="step">01</span>
+            <h2 id="analyzer-title">Add student feedback</h2>
+          </div>
+          <span id="character-count">0 / 2,000</span>
+        </div>
+        <textarea id="feedback" maxlength="2000" placeholder="Example: The lab computers kept crashing and I could not complete my assignment before the deadline." aria-label="Student feedback"></textarea>
+        <div class="examples">
+          <span>Try an example:</span>
+          <button type="button" data-example="The lecturer made complex topics easy to understand and the practical sessions were excellent.">Positive</button>
+          <button type="button" data-example="The updated timetable says our next laboratory session is on Monday morning.">Neutral</button>
+          <button type="button" data-example="The portal crashed before the deadline and support has ignored my urgent complaint.">Urgent</button>
+        </div>
+        <button class="analyze-button" id="analyze-button" type="button">
+          <span>Analyze feedback</span><span aria-hidden="true">→</span>
+        </button>
+        <p class="error" id="error" role="alert"></p>
+      </div>
+
+      <div class="panel result-panel" id="result-panel" aria-live="polite">
+        <div class="empty-state" id="empty-state">
+          <div class="signal-icon" aria-hidden="true"><i></i><i></i><i></i></div>
+          <h2>Your analysis will appear here</h2>
+          <p>Enter feedback and run the model to reveal sentiment, confidence, priority, and recommended action.</p>
+        </div>
+        <div class="result-content" id="result-content" hidden>
+          <div class="result-topline"><span class="step">02</span><span>Analysis complete</span></div>
+          <div class="verdict">
+            <div>
+              <small>Detected sentiment</small>
+              <h2 id="sentiment">—</h2>
+            </div>
+            <span class="priority" id="priority">— priority</span>
+          </div>
+          <div class="confidence-row"><span>Model confidence</span><strong id="confidence">—</strong></div>
+          <div class="meter"><div id="confidence-meter"></div></div>
+          <div class="probabilities" id="probabilities"></div>
+          <div class="insight-block">
+            <small>Suggested action</small>
+            <p id="recommendation"></p>
+          </div>
+          <div class="keyword-block">
+            <small>Key signals</small>
+            <div id="keywords"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="how-it-works">
+      <div><span>1</span><h3>Vectorize</h3><p>Text becomes unigram and bigram frequency features.</p></div>
+      <div><span>2</span><h3>Classify</h3><p>Naive Bayes estimates a probability for each sentiment.</p></div>
+      <div><span>3</span><h3>Prioritize</h3><p>Risk signals and model confidence produce an action level.</p></div>
+    </section>
+  </main>
+
+  <footer><span>CampusPulse AI · Responsible student feedback triage</span><a href="/health">API health</a></footer>
+  <script src="{{ url_for('static', filename='app.js') }}" defer></script>
+</body>
+</html>
+
